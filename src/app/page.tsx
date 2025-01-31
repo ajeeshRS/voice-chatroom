@@ -3,9 +3,11 @@ import FeatureCard from "@/components/FeatureCard";
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
 import { caveat, kalam, poppins } from "@/fonts/fonts";
-import { ArrowRight, Mic, Users, Lock } from "lucide-react";
+import { ArrowRight, Mic, Users, Lock, Merge, Plus } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 export default function Home() {
+  const router = useRouter();
   return (
     <div className={`min-h-screen flex flex-col ${poppins.className}`}>
       <Navbar />
@@ -20,9 +22,22 @@ export default function Home() {
           Join crystal-clear voice chat rooms and make your conversations come
           alive.
         </p>
-        <button className="text-md px-4 py-2 flex items-center bg-black text-white rounded-lg">
-          Get Started <ArrowRight className="ml-2" />
-        </button>
+        <div className="flex items-center space-x-2">
+          <button
+            className="text-md px-4 py-2 flex items-center bg-black text-white rounded-lg group"
+            onClick={() => router.push("/create")}
+          >
+            Create
+            <Plus className="ml-2 w-5 h-5 " />
+          </button>
+          <button
+            className="text-md px-4 py-2 flex items-center bg-black text-white rounded-lg group"
+            onClick={() => router.push("/join")}
+          >
+            Join
+            <Merge className="ml-2 w-5 h-5" />
+          </button>
+        </div>
 
         <div className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-8 w-full max-w-3xl">
           <FeatureCard
