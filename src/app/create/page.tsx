@@ -1,6 +1,10 @@
+import BackNav from "@/components/BackNav";
+
 export default function Page() {
   return (
-    <div className="w-full h-screen flex items-center justify-center">
+    <div className="w-full h-screen flex flex-col items-center justify-center">
+      <BackNav />
+
       <div className="md:w-2/6 w-5/6 h-2/6 flex flex-col items-center justify-start p-10 rounded-xl shadow-md space-y-3">
         <h4 className="font-bold text-xl">Create New Room</h4>
         <input
