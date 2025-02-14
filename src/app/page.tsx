@@ -1,17 +1,14 @@
 "use client";
 import FeatureCard from "@/components/FeatureCard";
 import Footer from "@/components/Footer";
-import Navbar from "@/components/Navbar";
 import { caveat, kalam, poppins } from "@/fonts/fonts";
-import { ArrowRight, Mic, Users, Lock, Merge, Plus } from "lucide-react";
+import { Mic, Users, Lock, Merge, Plus } from "lucide-react";
 import { useRouter } from "next/navigation";
 
 export default function Home() {
   const router = useRouter();
   return (
     <div className={`min-h-screen flex flex-col ${poppins.className}`}>
-      <Navbar />
-
       <main className="flex-grow flex flex-col items-center justify-center p-6 text-center py-20">
         <h1
           className={`${kalam.className} text-4xl md:text-6xl font-bold mb-6`}
