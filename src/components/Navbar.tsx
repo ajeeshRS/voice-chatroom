@@ -3,15 +3,15 @@ import { CustomSession } from "@/lib/auth";
 import { signIn, signOut, useSession } from "next-auth/react";
 import Image from "next/image";
 import { FcGoogle } from "react-icons/fc";
+import BackNav from "./BackNav";
 
 export default function Navbar() {
   const { data: session, status } = useSession();
   const customSession = session as CustomSession;
-  console.log(customSession?.user);
   return (
     <header className="p-6">
       <nav className="w-full flex justify-between items-center">
-        <div className="text-2xl font-bold">ECHO</div>
+        <div className="text-2xl font-bold flex items-center"><BackNav/> ECHO</div>
         {status !== "loading" && customSession?.user ? (
           session?.user?.image ? (
             <Image
