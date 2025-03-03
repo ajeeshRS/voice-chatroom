@@ -4,6 +4,7 @@ import { signIn, signOut, useSession } from "next-auth/react";
 import Image from "next/image";
 import { FcGoogle } from "react-icons/fc";
 import BackNav from "./BackNav";
+import Link from "next/link";
 
 export default function Navbar() {
   const { data: session, status } = useSession();
@@ -11,7 +12,9 @@ export default function Navbar() {
   return (
     <header className="p-6">
       <nav className="w-full flex justify-between items-center">
-        <div className="text-2xl font-bold flex items-center"><BackNav/> ECHO</div>
+        <div className="text-2xl font-bold flex items-center">
+          <BackNav /> <Link href="/">ECHO</Link>
+        </div>
         {status !== "loading" && customSession?.user ? (
           session?.user?.image ? (
             <Image

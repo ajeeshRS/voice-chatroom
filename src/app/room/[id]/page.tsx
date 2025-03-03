@@ -3,8 +3,9 @@ import { names } from "@/app/utils/data";
 import { useSocket } from "@/hooks/useSocket";
 import { AudioLines, Hand, LogOut, Mic, MicOff } from "lucide-react";
 import { useSession } from "next-auth/react";
-import { useParams, usePathname } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import { toast } from "sonner";
 
 export interface User {
   ws: WebSocket;
@@ -16,9 +17,22 @@ export default function Page() {
   const { id } = useParams();
   const { socket, loading } = useSocket();
   const { data: session } = useSession();
+  const router = useRouter();
 
   const [userCount, setUserCount] = useState(0);
   const [users, setUsers] = useState<User[]>([]);
+
+  const handleLeaveRoom = () => {
+    if (!socket) return;
+
+    socket.send(
+      JSON.stringify({
+        action: "leave",
+        roomId: id,
+        username: session?.user?.name,
+      })
+    );
+  };
 
   useEffect(() => {
     if (socket) {
@@ -33,11 +47,15 @@ export default function Page() {
       // hanlding on message events
       socket.addEventListener("message", (e) => {
         const parsedData = JSON.parse(e.data);
-
+        console.log(parsedData);
         if (parsedData.type === "room_details") {
           setUserCount(parsedData.participantCount);
           setUsers(parsedData.users);
           console.log(parsedData.users);
+        } else if (parsedData.type === "left") {
+          console.log("left the room reached");
+          router.push("/");
+          toast.success("Left the room");
         }
       });
     } else {
@@ -97,7 +115,10 @@ export default function Page() {
             <button className="rounded-full p-3 border text-black hover:bg-neutral-50">
               <Mic className="w-5 h-5" />
             </button>
-            <button className="rounded-full p-3 bg-red-500 hover:bg-red-600 text-white">
+            <button
+              onClick={handleLeaveRoom}
+              className="rounded-full p-3 bg-red-500 hover:bg-red-600 text-white"
+            >
               <LogOut className="w-5 h-5" />
             </button>
           </div>
